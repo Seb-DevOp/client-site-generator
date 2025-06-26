@@ -1,5 +1,0 @@
-flask
-gunicorn
-google-cloud-cloudbuild
-google-cloud-run
-google-api-core
