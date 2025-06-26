@@ -1,11 +1,10 @@
 FROM python:3.9-slim
 
-WORKDIR /app
+WORKDIR /api
 
 COPY requirements.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install google-cloud-build flask gunicorn google-cloud-run google-api-core
-
 
 COPY . .
 
