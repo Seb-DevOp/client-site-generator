@@ -1,12 +1,9 @@
 FROM python:3.10-slim
 
 WORKDIR /app
-COPY . /app
+COPY main.py /app
 
-RUN apt-get update && apt-get install -y gcc \
- && pip install --no-cache-dir --upgrade pip \
- && pip install --no-cache-dir flask google-cloud-build google-cloud-storage
+RUN pip install flask
 
 EXPOSE 8080
-
 CMD ["python", "main.py"]
