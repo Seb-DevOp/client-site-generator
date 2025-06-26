@@ -1,12 +1,11 @@
-FROM python:3.10-slim
+FROM python:3.9-slim
 
 WORKDIR /app
-COPY main.py /app
+COPY . /app
 
-RUN pip install --no-cache-dir \
-    flask \
-    google-cloud-build==3.12.0 \
-    protobuf==4.25.3
+RUN pip install --upgrade pip
+RUN pip install flask google-cloud-build google-cloud-run gunicorn
 
 EXPOSE 8080
-CMD ["python", "main.py"]
+
+CMD exec gunicorn --bind :$PORT main:app
