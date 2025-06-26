@@ -1,3 +1,5 @@
 flask
-google-cloud-build==3.11.0
-protobuf==4.25.3
+gunicorn
+google-cloud-cloudbuild
+google-cloud-run
+google-api-core
