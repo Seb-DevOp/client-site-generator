@@ -1,9 +1,10 @@
-FROM python:3.11-slim
+FROM python:3.11
 
 WORKDIR /app
 COPY . /app
 
-RUN pip install flask google-cloud-build
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir -r requirements.txt
 
-EXPOSE 5000
+EXPOSE 8080
 CMD ["python", "main.py"]

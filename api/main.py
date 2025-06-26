@@ -1,9 +1,32 @@
 from flask import Flask, request, jsonify
 import os
-import subprocess
 import uuid
+from google.cloud import cloudbuild_v1
+from google.protobuf import duration_pb2
 
 app = Flask(__name__)
+
+def trigger_build(full_id):
+    client = cloudbuild_v1.CloudBuildClient()
+    project_id = "projet-pipeline"
+
+    build = {
+        "steps": [
+            {
+                "name": "gcr.io/cloud-builders/docker",
+                "args": ["build", "-t", f"gcr.io/{project_id}/{full_id}", "."]
+            },
+            {
+                "name": "gcr.io/cloud-builders/docker",
+                "args": ["push", f"gcr.io/{project_id}/{full_id}"]
+            }
+        ],
+        "timeout": duration_pb2.Duration(seconds=600)
+    }
+
+    operation = client.create_build(project_id=project_id, build=build)
+    result = operation.result()
+    return result
 
 @app.route("/deploy", methods=["POST"])
 def deploy():
@@ -18,10 +41,10 @@ def deploy():
     with open(f"./sites/{full_id}/index.html", "w") as f:
         f.write(html_code)
 
-    # Appel Cloud Build
-    subprocess.run([
-        "gcloud", "builds", "submit", "--config=cloudbuild.yaml",
-        "--substitutions=_SITE_ID={}".format(full_id)
-    ])
+    # Déclenchement du build via l’API
+    build_result = trigger_build(full_id)
 
-    return jsonify({"message": "Déploiement lancé", "site_id": full_id})
+    return jsonify({"message": "Déploiement lancé", "site_id": full_id, "build_result": str(build_result)})
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8080)
