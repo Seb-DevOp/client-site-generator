@@ -22,7 +22,8 @@ jobs:
 
       - name: Build and Push Docker image
         run: |
-          gcloud builds submit --tag gcr.io/projet-pipeline/site-deployer-api
+          gcloud builds submit ./api --tag gcr.io/projet-pipeline/site-deployer-api
+
 
       - name: Deploy to Cloud Run
         run: |
