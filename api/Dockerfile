@@ -4,6 +4,8 @@ WORKDIR /app
 
 COPY requirements.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install google-cloud-build flask gunicorn google-cloud-run google-api-core
+
 
 COPY . .
 
