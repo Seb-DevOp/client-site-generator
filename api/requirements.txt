@@ -1,4 +1,9 @@
-Flask==2.3.3
-gunicorn==21.2.0
+fastapi
+uvicorn
 google-cloud-build==3.31.2
-google-cloud-run==0.8.0
+google-cloud-run
+google-api-core
+protobuf==4.21.12
+proto-plus==1.22.3
+google-cloud-storage
+google-api-python-client
