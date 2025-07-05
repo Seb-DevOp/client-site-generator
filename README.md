@@ -46,12 +46,14 @@ Ce projet fournit une API HTTP `POST /deploy` qui :
 
 Clone le repo, et les commandes suivantes se font en local sur la machine
 
-```bash
-##Premiere commande build l'image docker
+---
+
+## bash
+Premiere commande build l'image docker
 
 gcloud builds submit --tag gcr.io/<PROJECT_ID>/site-deployer-api
 
-## 2eme commande deploy l'image buildée
+2eme commande deploy l'image buildée
 
 gcloud run deploy site-deployer-api \
   --image gcr.io/<PROJECT_ID>/site-deployer-api \
@@ -63,6 +65,7 @@ gcloud run deploy site-deployer-api \
 Une fois l'API deployé
 
 Envoyer a l'API deux variable "project" et "html"
+## /!\ LA VARIABLE HTML DOIT ETRE LE CODE HTML DU SITE ET NON LE FICHIER.HTML 
 L'API repondra par le build ID
 
 Pour voir l'état :
